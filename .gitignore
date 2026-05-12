@@ -1,0 +1,7 @@
+node_modules/
+.claude/
+
+# Screenshots de desarrollo (no necesarios en producción)
+screenshot-*.png
+ss-*.png
+.DS_Store
