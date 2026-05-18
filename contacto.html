@@ -7,6 +7,9 @@
   <title>Contacto – Pluralcoop</title>
 
   <!-- Google Fonts: Inter -->
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -269,7 +272,7 @@
               <div><label for="mensaje" class="block text-sm font-medium text-slate-700 mb-1.5">Mensaje</label><textarea id="mensaje" name="mensaje" rows="4" class="w-full border border-slate-300 rounded-lg px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition bg-white resize-none" placeholder="Escribí tu consulta aquí…"></textarea></div>
               <button type="submit" class="w-full flex items-center justify-center gap-2 bg-blue-700 hover:bg-blue-800 text-white font-semibold py-4 rounded-xl text-lg transition-colors min-h-[56px]">Enviar consulta<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg></button>
             </form>
-            <div id="form-success" class="hidden mt-4 bg-green-50 border border-green-200 rounded-xl p-6 text-center"><svg class="w-12 h-12 text-green-500 mx-auto mb-3" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg><p class="text-green-800 font-semibold text-lg">¡Consulta enviada!</p><p class="text-green-700 text-sm mt-1">Nos pondremos en contacto con vos a la brevedad.</p></div>
+            <div id="form-success" class="hidden mt-4 bg-green-50 border border-green-200 rounded-xl p-6 text-center"><svg class="w-12 h-12 text-green-500 mx-auto mb-3" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg><p class="text-green-800 font-semibold text-lg">¡Consulta enviada por WhatsApp!</p><p class="text-green-700 text-sm mt-1">Se abrió WhatsApp con tu consulta pre-armada. Si no se abrió automáticamente, escribinos al <a href="https://wa.me/5491136000692" target="_blank" rel="noopener noreferrer" class="underline font-semibold">+54 11 3600-0692</a>.</p></div>
           </div>
         </div>
       </div>
@@ -514,10 +517,28 @@
       });
     }
 
-    // Contact form
+    // Contact form → WhatsApp
     document.getElementById('contact-form').addEventListener('submit', (e) => {
       e.preventDefault();
-      document.getElementById('contact-form').classList.add('hidden');
+      const f = e.target;
+      const nombre  = f.nombre.value.trim();
+      const dni     = f.dni.value.trim();
+      const telefono= f.telefono.value.trim();
+      const email   = f.email.value.trim();
+      const motivo  = f.motivo.options[f.motivo.selectedIndex].text;
+      const mensaje = f.mensaje.value.trim();
+
+      let text = `Hola, me comunico desde el sitio web de PluralCoop.\n\n`;
+      text += `*Nombre:* ${nombre}\n`;
+      if (dni)      text += `*DNI:* ${dni}\n`;
+      if (telefono) text += `*Teléfono:* ${telefono}\n`;
+      if (email)    text += `*Email:* ${email}\n`;
+      text += `*Motivo:* ${motivo}\n`;
+      if (mensaje)  text += `\n*Mensaje:*\n${mensaje}`;
+
+      window.open(`https://wa.me/5491136000692?text=${encodeURIComponent(text)}`, '_blank');
+
+      f.classList.add('hidden');
       document.getElementById('form-success').classList.remove('hidden');
     });
   </script>
